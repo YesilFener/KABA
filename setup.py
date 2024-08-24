@@ -8,7 +8,6 @@ setup(
         'requests',
         'beautifulsoup4',
         'argparse',
-        'subprocess',
         'multiprocessing',
         'bs4',
         'datetime',
