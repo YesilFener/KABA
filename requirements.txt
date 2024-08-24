@@ -3,4 +3,3 @@ beautifulsoup4
 argparse
 bs4
 datetime
-logging
