@@ -10,7 +10,6 @@ setup(
         'argparse',
         'bs4',
         'datetime',
-        'pycopy-urllib.parse',
         'logging',
     ],
     entry_points='''
