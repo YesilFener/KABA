@@ -9,8 +9,7 @@ setup(
         'beautifulsoup4',
         'argparse',
         'bs4',
-        'datetime',
-        'logging',
+        'datetime'
     ],
     entry_points='''
         [console_scripts]
