@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='kaba',
     version='0.1',
-    py_modules=['kaba_scanner'],
+    packages=find_packages(),
     install_requires=[
         'requests',
         'beautifulsoup4',
@@ -11,8 +11,9 @@ setup(
         'bs4',
         'datetime'
     ],
-    entry_points='''
-        [console_scripts]
-        kaba=kaba_scanner:main
-    ''',
+    entry_points={
+        'console_scripts': [
+            'kaba=kaba_scanner.__main__:main',
+        ],
+    },
 )
