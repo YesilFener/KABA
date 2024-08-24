@@ -8,7 +8,6 @@ setup(
         'requests',
         'beautifulsoup4',
         'argparse',
-        'multiprocessing',
         'bs4',
         'datetime',
         'pycopy-urllib.parse',
