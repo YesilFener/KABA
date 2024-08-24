@@ -16,8 +16,6 @@ from multiprocessing import Pool
 from datetime import datetime
 from urllib.parse import urlparse
 
-log_file = "scan.log"
-logging.basicConfig(filename=log_file, level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Global değişkenler
 vulnerabilities = {
