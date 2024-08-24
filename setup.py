@@ -8,7 +8,6 @@ setup(
         'requests',
         'beautifulsoup4',
         'argparse',
-        'bs4',
         'datetime'
     ],
     entry_points={
