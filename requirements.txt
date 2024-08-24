@@ -3,5 +3,4 @@ beautifulsoup4
 argparse
 bs4
 datetime
-pycopy-urllib.parse
 logging
