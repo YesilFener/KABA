@@ -16,8 +16,9 @@ from multiprocessing import Pool
 from datetime import datetime
 from urllib.parse import urlparse
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-# Global değişkenler
+
 vulnerabilities = {
     'js_vulnerabilities': {},
     'xss_vulnerabilities': {},
